@@ -7,10 +7,8 @@ import sys
 
 def minSteps(n, B):
     # Complete this function
-    lst=[]
+    lst=list(B)
     change=0
-    for el in B:
-        lst.append(el)
     for i in range(len(lst)-2):
         if lst[i:i+3]==["0","1","0"]:
             lst[i+2]="1"
