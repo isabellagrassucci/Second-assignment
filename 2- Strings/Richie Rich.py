@@ -7,12 +7,12 @@ def richieRich(s, n, k):
     lst = []
     left = []
     right = []
-    original = []
+    firstlst = []
     number = []
     center = int()
     for el in s:
         lst.append(el)
-        original.append(el)
+        firstlst.append(el)
     for el in lst[:len(lst) // 2]:
         left.append(el)
     if n % 2 == 1:
@@ -24,47 +24,46 @@ def richieRich(s, n, k):
             right.append(el)
     right = right[::-1]
 
-    differentCount = 0
+    couples = 0
     for i in range(len(left)):
         if left[i] != right[i]:
-            differentCount += 1  # the number of different coupples
+            couples += 1  # the number of different coupples
 
-    if differentCount > k:
+    if couples > k:
         return '-1'
 
     for i in range(len(left)):
         if left[i] != right[i] and (int(left[i]) == 9 or int(right[i]) == 9):  # if the are different but one is 9
-            if k >= differentCount:  # +1
+            if k >= couples:  # +1
                 left[i] = 9
                 right[i] = 9
                 k -= 1
-                differentCount -= 1
+                couples -= 1
 
     for i in range(len(left)):
         if left[i] != right[i] and (int(left[i]) != 9 and int(right[i]) != 9):
-            if k - 2 >= differentCount - 1:
+            if k - 2 >= couples - 1:
                 left[i] = 9
                 right[i] = 9
                 k -= 2
-                differentCount -= 1
+                couples -= 1
         if left[i] != right[i]:
-            if k >= differentCount:
+            if k >= couples:
                 if left[i] > right[i]:
                     right[i] = left[i]
                     if right[i] > left[i]:
                         left[i] = right[i]
                 k -= 1
-                differentCount -= 1
+                couples -= 1
 
     for i in range(len(left)):
-        if original[i] == original[-i - 1]:
-            if k >= 2 + differentCount and (int(left[i]) != 9 and int(right[
-                                                                          i]) != 9):  # if they are the same but both are diffrfent from 9 and there are still changes available
+        if firstlst[i] == firstlst[-i - 1]:
+            if k >= 2 + couples and (int(left[i]) != 9 and int(right[i]) != 9):  # if they are the same but both are diffrfent from 9 and there are still changes available
                 left[i] = 9
                 right[i] = 9
                 k -= 2
-        if original[i] != original[-i - 1]:
-            if k >= 1 + differentCount and (int(left[i]) != 9 and int(right[i]) != 9):
+        if firstlst[i] != firstlst[-i - 1]:
+            if k >= 1 + couples and (int(left[i]) != 9 and int(right[i]) != 9):
                 left[i] = 9
                 right[i] = 9
                 k -= 1
